@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+svg{
+  user-select: none;
+}
+/* vou utilizar o toggle no data-theme par mudanca de cores na pagina */
+
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg-main: #0e1621;
+  --bg-sidebar: #17212b;
+  --bg-chat: #0e1621;
+  --bg-card: #182533;
+
+  /* Texto */
+  --text-primary: #ffffff;
+  --text-secondary: #8696a0;
+
+  /* Identidade / Primárias */
+  --primary-light: #3390ec;
+  --primary: #3390ec;
+  --primary-dark: #2a7bd8;
+
+  /* Componentes */
+  --message-sent: #2b5278;
+  --message-received: #182533;
+  --button-primary: #3390ec;
+  --button-hover: #2a7bd8;
+
+  /* Bordas / divisores */
+  --border-color: #1f2c3a;
+}
+
+[data-theme="light"] {
+  /* Backgrounds */
+  --bg-main: #ffffff;
+  --bg-sidebar: #ffffff;
+  --bg-chat: #e5ddd5;
+  --bg-card: #ffffff;
+
+  /* Texto */
+  --text-primary: #000000;
+  --text-secondary: #707579;
+
+  /* Identidade / Primárias */
+  --primary-light: #3390ec;
+  --primary: #3390ec;
+  --primary-dark: #2a7bd8;
+
+  /* Componentes */
+  --message-sent: #dcf8c6;
+  --message-received: #ffffff;
+  --button-primary: #3390ec;
+  --button-hover: #2a7bd8;
+
+  /* Bordas / divisores */
+  --border-color: #dcdcdc;
+}
+

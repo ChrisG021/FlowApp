@@ -1,0 +1,132 @@
+.editProfile{
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px;
+    height: 100vh;
+
+    position: relative;
+}
+.editProfile .header{
+    display: flex;
+    width: 100%;
+    font-size: 20px;
+    gap: 30px;
+    padding: 10px;
+}
+.editProfile .header .container-icon{
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 100ms ease-in;
+    cursor: pointer;
+}
+.dark .header .container-icon:hover {
+    background: #ffffff20;
+}
+.light .header .container-icon:hover {
+    background: #00000010;
+}
+
+.editProfile .options>li{
+    display: flex ;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 20px;
+    padding: 30px 20px;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: all 200ms ease-in;
+}
+.editProfile .options>li:hover{
+    background-color: #ffffff20;
+}
+.options .options-icons-container{
+    font-size: 24px;
+    color: color-mix(in oklab, var(--text-primary) 60%, transparent 40%);
+}
+
+
+.editProfile .input-container {
+    width: 100%;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    position: relative;
+    padding: 20px 10px;
+
+    transition: all 200ms ease-in ;
+}
+
+.editProfile .input-container input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 16px;
+
+    outline: none;
+
+}
+.editProfile textarea{
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 16px;
+
+    resize: none;       
+    min-height: 80px;   
+    line-height: 1.4;   
+}
+
+.editProfile .input-container label {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--bg-sidebar);
+    padding: 0 5px;
+    font-size: 14px;
+    transition: all 200ms ease-in ;
+    pointer-events: none;
+}
+.editProfile .input-container span{
+    font-size: 13px;
+
+    position: absolute;
+    bottom: -8px;
+    right: 10px;
+    background-color: var(--bg-sidebar);
+    padding:0 5px;
+    transition: all 200ms ease-in ;
+
+}
+.editProfile .input-container:hover span{
+    color: var(--primary);
+}
+.editProfile .input-container textarea ~ label {
+    top: 30px;
+}
+.editProfile .input-container:hover{
+    border-color: var(--primary);
+}
+.editProfile .input-container:hover label{
+    color: var(--primary);
+}
+
+
+/* necessario para o efeito do label movimentando */
+.editProfile .input-container input:focus + label,
+.editProfile .input-container input:not(:placeholder-shown) + label,
+.editProfile .input-container textarea:focus + label,
+.editProfile .input-container textarea:not(:placeholder-shown) + label
+ {
+    top: 0;
+    font-size: 11px;
+    transform: translateY(-50%);
+}

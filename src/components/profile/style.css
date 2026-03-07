@@ -1,0 +1,50 @@
+.profile{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px;
+    height: 100vh;
+}
+.profile .header{
+    display: flex;
+    width: 100%;
+    font-size: 20px;
+    gap: 30px;
+    padding: 10px;
+}
+.profile .header .container-icon{
+    padding: 5px;
+    border-radius: 50%;
+    transition: all 100ms ease-in;
+    cursor: pointer;
+}
+.dark .header .container-icon:hover {
+    background: #ffffff20;
+}
+.light .header .container-icon:hover {
+    background: #00000010;
+}
+
+.profile .options>li{
+    display: flex ;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 20px;
+    padding: 30px 20px;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: all 200ms ease-in;
+}
+.profile .options>li:hover{
+    background-color: #ffffff20;
+}
+.light.profile .options>li:hover{
+    background-color: #00000010;
+}
+.options .options-icons-container{
+    font-size: 24px;
+    color: var(--text-secondary);
+}
