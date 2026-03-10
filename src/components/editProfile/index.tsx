@@ -16,13 +16,13 @@ export default function EditProfile({ setToEdit }: any) {
     const [updateData, setUpdateData] = useState<UpdateProfileProps | null>(null)
     const [originalData, setOriginalData] = useState<UpdateProfileProps | null>(null)
     const remaining = 70 - (updateData?.bio?.length ?? 0);
-    async function validateUserName(){
+    async function validateUserName() {
         try {
-            const { data } = await supabase.from("profiles").select().eq("user_name",updateData?.user_name);
+            const { data } = await supabase.from("profiles").select().eq("user_name", updateData?.user_name);
             if (!data) return true;
-            if (data.length > 0 && user?.id != data[0].id){
+            if (data.length > 0 && user?.id != data[0].id) {
                 console.log("LOG:NOME DE USUARIO JA EXISTENTE")
-                showToast("error","Nome de usuário já existente")
+                showToast("error", "Nome de usuário já existente")
                 return false;
             }
             return true;
@@ -59,7 +59,7 @@ export default function EditProfile({ setToEdit }: any) {
             console.log("Nenhuma alteração detectada.");
             return;
         }
-        
+
         //FAZER A TRATIVA DE NOMES D USUARIOS REPETIDO
 
         try {
@@ -85,17 +85,17 @@ export default function EditProfile({ setToEdit }: any) {
     }
 
     useEffect(() => {
-        if (user) {
-            const profileData = {
-                name: user.name,
-                user_name: user.user_name,
-                bio: user.bio,
-            };
+        if (!user) return;
 
-            setOriginalData(profileData);
-            setUpdateData(profileData);
-        }
-    }, [user]);
+        const profileData = {
+            name: user.name,
+            user_name: user.user_name,
+            bio: user.bio,
+        };
+
+        setOriginalData(profileData);
+        setUpdateData(profileData);
+    }, [user?.id]);
 
     //guarda os dados para comparacao
 

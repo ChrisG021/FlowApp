@@ -13,7 +13,6 @@ interface CardsProps {
 
 export default function Card({ imgSrc, nameCard, bio, lastMessage, className, type }: CardsProps) {
     const { theme } = useTheme();
-    console.log(imgSrc);
     return (
         <div className={`flex flex-row cursor-pointer p-2.5 gap-5 transition-all items-center duration-100 ease-in-out rounded-xl ${theme == "dark" ? "hover:bg-white/10" : "hover:bg-black/20"} ${className}`}>
             {imgSrc?.trim() ? (
@@ -21,7 +20,7 @@ export default function Card({ imgSrc, nameCard, bio, lastMessage, className, ty
                     <img className="w-full h-full object-cover" src={imgSrc} />
                 </div>
             ) : (
-                <div className={`w-15 h-15  rounded-full flex justify-center items-center ${theme == "dark" ? "bg-white text-black" : "bg-black"}`} >
+                <div className={`w-15 h-15  rounded-full flex justify-center items-center bg-(--button-primary)`} >
                     <p>{nameCard.slice(0, 2)}</p>
                 </div>
             )}

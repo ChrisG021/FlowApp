@@ -3,20 +3,30 @@ import "./style.css";
 import { MdModeEdit } from "react-icons/md";
 import { BsRocketTakeoff, BsThreeDotsVertical } from "react-icons/bs";
 import { useTheme } from "../../context/themeContext";
-import { PiPhoneBold } from "react-icons/pi";
+import { PiPhoneBold, PiSignOutThin } from "react-icons/pi";
 import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
 import { useSession } from "../../context/authContext";
 import { LuSquareUserRound } from "react-icons/lu";
+import supabase from "../../supabase/supabase";
+import { useState } from "react";
 
 
 export default function UserProfile({ setToUserProfile, setToEdit }: any) {
     const { user } = useSession();
     const { theme } = useTheme();
+    const [showOptions,setShowOptions] = useState(false);
+    async function signOut() {
+        const { error } = await supabase.auth.signOut();
+        if (error) {
+            console.error("LOG: erro no sigout do supabase " + error);
+        }
+
+    }
 
     return (
         // preciso refazer pq ta feio precisa ser uma pagina toda
         <div className={`profile bg-(--bg-sidebar)  ${theme}`}>
-            <nav className="header">
+            <nav className="header relative">
                 <div className="flex ">
                     <div className="container-icon" onClick={() => { setToUserProfile(false) }}>
                         <BiArrowBack />
@@ -29,11 +39,19 @@ export default function UserProfile({ setToUserProfile, setToEdit }: any) {
                     <div className="container-icon" onClick={() => setToEdit(true)}>
                         <MdModeEdit />
                     </div>
-                    <div className="container-icon">
+                    <div className="container-icon" onClick={()=>setShowOptions(!showOptions)}>
                         <BsThreeDotsVertical />
                     </div>
                 </div>
+                <div className={`transition-all duration-200 ease-in-out absolute flex right-2 bottom-2 ${showOptions?"opacity-100 visible translate-x-[-20px] translate-y-[40px]" : "opacity-0 invisible translate-x-0 translate-y-0"} bg-(--bg-sidebar)/80 backdrop-blur-2xl rounded-sm  options-card max-w-50 w-full`}>
+                    <div className="options-items-container">
+                        <div className="options-items">
+                            <PiSignOutThin />
+                            <p>Log out</p>
+                        </div>
+                    </div>
 
+                </div>
             </nav>
             <div >
                 <div className="flex flex-col justify-center items-center p-5 gap-5">

@@ -185,15 +185,20 @@
     transition:
         opacity 200ms ease,
         transform 200ms ease,
-        background 100ms ease;
+        background 100ms ease,
+        visibility 0s ease 200ms; /* espera a animação acabar */
+    z-index: 20;
 }
 
 .options-card-container.show {
     opacity: 1;
-    transform: translateY(0);
-    z-index: 20;
+    transform: translate(0, 0);
 }
 
+.options-card-container.hide {
+    opacity: 0;
+    transform: translate(-20px, -20px);
+}
 
 /* =========================
    OPTIONS CARD CONTENT
@@ -202,9 +207,6 @@
 .options-card {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-
-    padding: 5px;
 
     color: var(--text-primary);
 }
@@ -213,14 +215,16 @@
 /* =========================
    OPTIONS ITEMS
 ========================= */
-
+.options-items-container{
+    padding: 5px;
+}
 .options-items {
     display: flex;
     align-items: center;
     gap: 10px;
 
-    padding: 10px;
-    border-radius: 10px;
+    padding: 5px;
+    border-radius: 5px;
 
     cursor: pointer;
     user-select: none;
@@ -231,7 +235,7 @@
 .options-items > p {
     flex: 1;
     min-width: 0;
-
+    font-size: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

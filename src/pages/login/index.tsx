@@ -190,7 +190,7 @@ export default function LoginPage() {
             }
             
             //salvando os dados no banco 
-            const username = generateUsername(signup.name);
+            const username = await generateUsername(signup.name);
             const { error: profileError } = await supabase
                 .from('profiles')
                 .insert({
