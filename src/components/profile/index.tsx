@@ -8,13 +8,13 @@ import { IoNotificationsOutline, IoSettingsOutline } from "react-icons/io5";
 import { useSession } from "../../context/authContext";
 import { LuSquareUserRound } from "react-icons/lu";
 import supabase from "../../supabase/supabase";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 export default function UserProfile({ setToUserProfile, setToEdit }: any) {
     const { user } = useSession();
     const { theme } = useTheme();
-    const [showOptions,setShowOptions] = useState(false);
+    const [showOptions, setShowOptions] = useState(false);
     async function signOut() {
         const { error } = await supabase.auth.signOut();
         if (error) {
@@ -22,6 +22,29 @@ export default function UserProfile({ setToUserProfile, setToEdit }: any) {
         }
 
     }
+    const cardRef = useRef<HTMLDivElement | null>(null);
+    const buttonRef = useRef<HTMLButtonElement | null>(null);
+    useEffect(() => {
+
+        //funcao para vou clicar fora da area do card para ele fechar auto 
+        function handleClickOutside(event: MouseEvent) {
+            if (
+                cardRef.current &&
+                !cardRef.current.contains(event.target as Node) &&
+                buttonRef.current &&
+                !buttonRef.current.contains(event.target as Node)
+            ) {
+                setShowOptions(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside)
+
+        // removendo o listener
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+
+    }, [])
 
     return (
         // preciso refazer pq ta feio precisa ser uma pagina toda
@@ -36,16 +59,16 @@ export default function UserProfile({ setToUserProfile, setToEdit }: any) {
                     <p>Perfil do usuário</p>
                 </div>
                 <div className="flex gap-5">
-                    <div className="container-icon" onClick={() => setToEdit(true)}>
+                    <button className="container-icon" onClick={() => setToEdit(true)}>
                         <MdModeEdit />
-                    </div>
-                    <div className="container-icon" onClick={()=>setShowOptions(!showOptions)}>
+                    </button>
+                    <button ref={buttonRef} className="container-icon" onClick={() => setShowOptions(!showOptions)}>
                         <BsThreeDotsVertical />
-                    </div>
+                    </button>
                 </div>
-                <div className={`transition-all duration-200 ease-in-out absolute flex right-2 bottom-2 ${showOptions?"opacity-100 visible translate-x-[-20px] translate-y-[40px]" : "opacity-0 invisible translate-x-0 translate-y-0"} bg-(--bg-sidebar)/80 backdrop-blur-2xl rounded-sm  options-card max-w-50 w-full`}>
-                    <div className="options-items-container">
-                        <div className="options-items">
+                <div ref={cardRef} className={`transition-all duration-200 ease-in-out absolute flex right-2 bottom-2 ${showOptions ? "opacity-100 visible  translate-y-[60px]" : "opacity-0 invisible translate-x-0 translate-y-0"} bg-(--bg-sidebar)/80 backdrop-blur-2xl rounded-sm  options-card max-w-50 w-full`}>
+                    <div className="options-items-container" ref={cardRef}>
+                        <div className="options-items" onClick={signOut}>
                             <PiSignOutThin />
                             <p>Log out</p>
                         </div>

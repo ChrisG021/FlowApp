@@ -120,7 +120,14 @@ export default function EditProfile({ setToEdit }: any) {
                     e.preventDefault();
                     updateDatabase();
                 }}
-                className="flex flex-col justify-center items-center p-5 gap-10">
+                onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        updateDatabase();
+                    }
+                }}
+                className="flex flex-col justify-center items-center p-5 gap-10"
+            >
 
                 {user?.img_perfil_url ? (
                     <>
@@ -162,12 +169,11 @@ export default function EditProfile({ setToEdit }: any) {
                     <label>Bio (opcional)</label>
                     <span>{remaining}</span>
                 </div>
-
-
-                <button type="submit" className="absolute bg-(--primary) text-2xl cursor-pointer transition-all duration-150 hover:-translate-y-1 text-white p-4 rounded-full bottom-10 right-10">
+                <button type="submit" className=" w-fit fixed bg-(--primary) text-2xl cursor-pointer transition-all duration-150 hover:-translate-y-1 text-white p-4 rounded-full bottom-5 right-5">
                     <FaCheck />
                 </button>
             </form>
+
         </div>
     );
 }

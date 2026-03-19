@@ -81,7 +81,7 @@
     padding-inline: 10px;
 }
 
-.list > li:hover {
+.list>li:hover {
     background: transparent;
 }
 
@@ -164,40 +164,34 @@
 .options-card-container {
     position: absolute;
 
-    top: 50px;
-    left: 20px;
-
-    width: 100%;
-    max-width: 50%;
-    min-height: 100px;
-
     border-radius: 10px;
 
-    background: color-mix(in oklab, var(--bg-sidebar) 85%, transparent);
-
-    backdrop-filter: blur(40px);
     box-shadow: 0 0 10px #00000020;
 
+    /* tanto o visibility como o opaccity geram o efeito otimizado de sumir e aparecer */
     opacity: 0;
+    visibility: hidden;
     transform: translate(-20px, -20px);
 
-    /* dividir os transitions facilita e deixa ele mais otimizado */
-    transition:
-        opacity 200ms ease,
-        transform 200ms ease,
-        background 100ms ease,
-        visibility 0s ease 200ms; /* espera a animação acabar */
+    transition: all 200ms ease;
+
     z-index: 20;
 }
 
 .options-card-container.show {
     opacity: 1;
-    transform: translate(0, 0);
+    visibility: visible;
+    transform: translate(0);
 }
 
-.options-card-container.hide {
-    opacity: 0;
-    transform: translate(-20px, -20px);
+.options-card-container.menu {
+    width: 200px;
+    background: color-mix(in oklab, var(--bg-sidebar) 85%, transparent);
+    backdrop-filter: blur(40px);
+}
+
+.options-card-container.submenu {
+    width: 150px;
 }
 
 /* =========================
@@ -215,15 +209,16 @@
 /* =========================
    OPTIONS ITEMS
 ========================= */
-.options-items-container{
+.options-items-container {
     padding: 5px;
 }
+
 .options-items {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 
-    padding: 5px;
+    padding: 8px;
     border-radius: 5px;
 
     cursor: pointer;
@@ -232,13 +227,17 @@
     transition: background 120ms ease;
 }
 
-.options-items > p {
+.options-items>p {
     flex: 1;
     min-width: 0;
     font-size: 15px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.options-items svg {
+    font-size: 20px;
 }
 
 
@@ -252,47 +251,48 @@
     background: #00000010;
 }
 
-.loading{
+.loading {
     width: 100%;
     align-items: center;
     justify-content: center;
     display: flex;
     padding: 20px 10px;
 }
+
 .loading svg {
- width: 3.25em;
- transform-origin: center;
- animation: rotate4 2s linear infinite;
+    width: 3.25em;
+    transform-origin: center;
+    animation: rotate4 2s linear infinite;
 }
 
 .loading circle {
- fill: none;
- stroke: hsl(214, 97%, 59%);
- stroke-width: 2;
- stroke-dasharray: 1, 200;
- stroke-dashoffset: 0;
- stroke-linecap: round;
- animation: dash4 1.5s ease-in-out infinite;
+    fill: none;
+    stroke: hsl(214, 97%, 59%);
+    stroke-width: 2;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: dash4 1.5s ease-in-out infinite;
 }
 
 @keyframes rotate4 {
- 100% {
-  transform: rotate(360deg);
- }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 @keyframes dash4 {
- 0% {
-  stroke-dasharray: 1, 200;
-  stroke-dashoffset: 0;
- }
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
 
- 50% {
-  stroke-dasharray: 90, 200;
-  stroke-dashoffset: -35px;
- }
+    50% {
+        stroke-dasharray: 90, 200;
+        stroke-dashoffset: -35px;
+    }
 
- 100% {
-  stroke-dashoffset: -125px;
- }
+    100% {
+        stroke-dashoffset: -125px;
+    }
 }

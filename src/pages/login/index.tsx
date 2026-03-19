@@ -188,7 +188,7 @@ export default function LoginPage() {
 
                 return username;
             }
-            
+
             //salvando os dados no banco 
             const username = await generateUsername(signup.name);
             const { error: profileError } = await supabase
@@ -219,15 +219,21 @@ export default function LoginPage() {
                     <h1 className=" font-bold text-2xl lg:text-4xl ">Seja Bem-vindo !</h1>
                     <p className={`text-sm font-medium ${theme == "dark" ? "text-white/70" : "text-black/70"}`}>Insira suas credenciais e usufrua do sistema</p>
                 </div>
-                <div className="w-full border border-white/20 flex flex-col gap-10  p-5 lg:p-10 bg-white/10 backdrop-blur-2xl">
-                    {/* forgot password */}
-                    <div className="w-full flex flex-col gap-5">
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
 
-                    </div>
+                        if (page === "login") {
+                            handleLogin();
+                        } else {
+                            handleSignUp();
+                        }
+                    }}
+                    className="w-full border border-white/20 flex flex-col gap-10 p-5 lg:p-10 bg-white/10 backdrop-blur-2xl"
+                >
 
                     <div className="w-full flex flex-col gap-5">
-                        {/* cadastro */}
-                        {page == "register" && (
+                        {page === "register" && (
                             <>
                                 <div className="input-container">
                                     <p className="label">Nome completo</p>
@@ -241,45 +247,45 @@ export default function LoginPage() {
                                                 name: e.target.value,
                                             }))
                                         }
-                                        name="name"
-                                        id="name"
-                                        placeholder="Digite seu nome" />
+                                        placeholder="Digite seu nome"
+                                    />
                                 </div>
 
                                 <div className="input-container">
-
                                     <p className="label">Email</p>
                                     <input
                                         required
                                         type="email"
                                         value={signup.email}
-                                        onChange={(e) => setSignup((prev) => ({ ...prev, email: e.target.value, }))}
-                                        name="email"
-                                        id="email"
-                                        placeholder="Seu email" />
+                                        onChange={(e) =>
+                                            setSignup((prev)=>({
+                                                ...prev,
+                                                email: e.target.value,
+                                            }))
+                                        }
+                                        placeholder="Seu email"
+                                    />
                                 </div>
 
                                 <div className="input-container">
-
-                                    <p className="label">Telefone </p>
+                                    <p className="label">Telefone</p>
                                     <input
                                         required
                                         type="tel"
                                         value={signup.phone}
-                                        //vai garantir a padronizao dos numeros para dois digitos do dd e mais os 9 do numero
-                                        //retirando tudo que n for numero /\D/g
                                         onChange={(e) =>
                                             setSignup((prev) => ({
-                                                ...prev, phone: e.target.value.replace(/\D/g, "").slice(0, 11),
-                                            }))}
-                                        name="phone"
-                                        id="phone"
-                                        placeholder="ex: 86988888888" />
+                                                ...prev,
+                                                phone: e.target.value.replace(/\D/g, "").slice(0, 11),
+                                            }))
+                                        }
+                                        placeholder="ex: 86988888888"
+                                    />
                                 </div>
                             </>
                         )}
-                        {/* fim dos campos especificos cadastro */}
-                        {page === "login" && !phoneLogin ? (
+
+                        {page === "login" && !phoneLogin && (
                             <div className="input-container">
                                 <p className="label">Email</p>
                                 <input
@@ -292,42 +298,36 @@ export default function LoginPage() {
                                             email: e.target.value,
                                         }))
                                     }
-                                    name="loginEmail"
-                                    id="login_email"
                                 />
                             </div>
-                        ) : page === "login" && phoneLogin ? (
+                        )}
+
+                        {page === "login" && phoneLogin && (
                             <div className="input-container">
                                 <p className="label">Telefone (+55)</p>
                                 <input
                                     required
                                     type="text"
                                     value={login.phone}
-
                                     onChange={(e) =>
                                         setLogin((prev) => ({
                                             ...prev,
                                             phone: e.target.value.replace(/\D/g, "").slice(0, 11),
                                         }))
                                     }
-                                    name="loginPhone"
-                                    id="login_phone"
                                     placeholder="Seu telefone"
                                 />
                             </div>
-                        ) : null}
-
+                        )}
 
                         <div className="input-container">
                             <p className="label">Sua senha</p>
-
                             <input
                                 required
                                 type="password"
-                                value={page == "register" ? signup.password : login.password}
+                                value={page === "register" ? signup.password : login.password}
                                 onChange={handleChange}
                                 name="password"
-                                id="password"
                                 placeholder="Sua senha"
                             />
 
@@ -339,43 +339,60 @@ export default function LoginPage() {
                                 </div>
                             )}
                         </div>
-
                     </div>
 
-                    {page == "login" ? (
+                    {page === "login" ? (
                         <>
                             <button
                                 type="submit"
-                                onClick={() => { handleLogin() }}
-                                className={`cursor-pointer ${theme == "dark" ? "bg-(--button-primary) text-black" : "bg-black text-white"}  w-full py-3 rounded-xl`}>
+                                className={`cursor-pointer ${theme === "dark"
+                                    ? "bg-(--button-primary) text-black"
+                                    : "bg-black text-white"} w-full py-3 rounded-xl`}
+                            >
                                 Entrar
                             </button>
 
-
-
                             <div className="flex w-full items-center gap-6 lg:gap-10 justify-between px-5 lg:px-10">
-                                <div className={`border ${theme == "dark" ? "border-white/50" : "border-black/50"}  h-0 w-full`} /><p className="text-(--text-primary)/50">ou</p><div className={`border ${theme == "dark" ? "border-white/50" : "border-black/50"}  h-0 w-full`} />
+                                <div className={`border ${theme === "dark" ? "border-white/50" : "border-black/50"} h-0 w-full`} />
+                                <p className="text-(--text-primary)/50">ou</p>
+                                <div className={`border ${theme === "dark" ? "border-white/50" : "border-black/50"} h-0 w-full`} />
                             </div>
 
-                            <button onClick={() => setPhoneLogin(!phoneLogin)} className={`cursor-pointer border border-black/20 flex w-full items-center py-3 rounded-xl bg-white justify-center gap-5 text-black`}>{!phoneLogin ? "Entrar com telefone" : "Entrar com email"}</button>
+                            <button
+                                type="button"
+                                onClick={() => setPhoneLogin(!phoneLogin)}
+                                className="cursor-pointer border border-black/20 flex w-full items-center py-3 rounded-xl bg-white justify-center gap-5 text-black"
+                            >
+                                {!phoneLogin ? "Entrar com telefone" : "Entrar com email"}
+                            </button>
                         </>
                     ) : (
-
                         <button
                             type="submit"
-                            onClick={() => { handleSignUp() }}
-                            className={`cursor-pointer ${theme == "dark" ? "bg-(--button-primary) text-black" : "bg-black text-white"}  w-full py-3 rounded-xl`}>
+                            className={`cursor-pointer ${theme === "dark"
+                                ? "bg-(--button-primary) text-black"
+                                : "bg-black text-white"} w-full py-3 rounded-xl`}
+                        >
                             Criar conta
                         </button>
                     )}
 
-
-                    {page == "login" ? (
-                        <p className="text-center">Não possui login? <span onClick={togglePage} className="text-(--primary) cursor-pointer">cadastre-se</span></p>
+                    {page === "login" ? (
+                        <p className="text-center">
+                            Não possui login?
+                            <span onClick={togglePage} className="text-(--primary) cursor-pointer">
+                                {" "}cadastre-se
+                            </span>
+                        </p>
                     ) : (
-                        <p className="text-center">Voltar ao <span onClick={togglePage} className="text-(--primary) cursor-pointer">Login</span></p>
+                        <p className="text-center">
+                            Voltar ao
+                            <span onClick={togglePage} className="text-(--primary) cursor-pointer">
+                                {" "}Login
+                            </span>
+                        </p>
                     )}
-                </div>
+                </form>
 
             </div>
             <div className="middle-circle" />

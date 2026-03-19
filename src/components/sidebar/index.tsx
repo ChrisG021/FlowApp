@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import EditProfile from "../editProfile";
 import { useTheme } from "../../context/themeContext";
 import Card from "../cards";
-import type { ProfileType } from "../../types/types";
+import type { ProfileType, RoomType } from "../../types/types";
 import supabase from "../../supabase/supabase";
 import UserProfile from "../profile";
 import { useSession } from "../../context/authContext";
@@ -12,7 +12,7 @@ import { FaSearch } from "react-icons/fa";
 import { IoMoon } from "react-icons/io5";
 import { VscThreeBars } from "react-icons/vsc";
 import { FaMessage, FaRegCircle } from "react-icons/fa6";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsArrowRight, BsThreeDotsVertical } from "react-icons/bs";
 import { FiSettings } from "react-icons/fi";
 import { TiUserOutline } from "react-icons/ti";
 
@@ -27,15 +27,17 @@ export default function Sidebar() {
     const [loading, setloading] = useState(false);
     const [loadingRooms, setloadingRooms] = useState(false);
     const [searchData, setSearchData] = useState<string>("");
-    const [rooms, setRooms] = useState();
+    const [rooms, setRooms] = useState<RoomType[]>();
     const { user } = useSession();
-    const [options, setOptions] = useState<boolean>(false)
+    const [options, setOptions] = useState<boolean>(false);
+    const [submenu,setSubmenu] = useState<boolean>(false);
     const cardRef = useRef<HTMLDivElement | null>(null);
     const buttonRef = useRef<HTMLButtonElement | null>(null);
 
 
     function toogleOptions() {
         setOptions(!options);
+        setSubmenu(false);
     }
 
 
@@ -131,7 +133,7 @@ export default function Sidebar() {
                     p_user: user.id
                 });
                 setRooms(data);
-                // console.log(data);
+                console.log(data);
 
             } catch (error) {
                 console.error(error);
@@ -180,7 +182,6 @@ export default function Sidebar() {
 
     // FIM SEARCHABAR
 
-    //vai ter que ser substituido por um realtime para saber se surgiu room nova ele
 
     async function searchRoomOrSet(id: string) {
         if (!user?.id) return;
@@ -244,7 +245,8 @@ export default function Sidebar() {
                             onChange={(e) => { setSearchData(e.target.value) }} />
                     </div>
 
-                    <div ref={cardRef} className={` text-white options-card-container ${options?"show visible":"invisible hide"}`}>
+
+                    <div ref={cardRef} className={` text-white options-card-container menu top-[50px] left-[20px] ${options ? "show " : ""}`}>
                         <div className="options-card">
                             <div className="options-items-container">
                                 <div className="options-items" onClick={() => setToUserProfile(true)}>
@@ -257,7 +259,7 @@ export default function Sidebar() {
                                             />
                                         ) : (
                                             <div className="bg-(--primary) w-full h-full flex justify-center items-center">
-                                                <p className="text-xs">{user?.user_name?.slice(0,1)}</p>
+                                                <p className="text-xs">{user?.user_name?.slice(0, 1)}</p>
                                             </div>
                                         )}
                                     </div>
@@ -279,30 +281,52 @@ export default function Sidebar() {
 
                                 </div>
                             </div>
-                            <hr className="text-gray-900" />
+                            <hr className={`${theme == "dark" ? "text-gray-900" : "text-neutral-200"} `} />
                             <div className="options-items-container">
                                 <div className="options-items">
-                                    <FaMessage className="text-xl" />
+                                    <FaMessage />
                                     <p>Mensagens Salva</p>
                                 </div>
                                 <div className="options-items">
-                                    <FaRegCircle className="text-xl" />
+                                    <FaRegCircle />
                                     <p>Meus Stories</p>
                                 </div>
                                 <div className="options-items">
-                                    <TiUserOutline className="text-xl" />
+                                    <TiUserOutline />
                                     <p>Contatos</p>
                                 </div>
                             </div>
-                            <hr className="text-gray-900" />
-                            <div className="options-items-container">
+                            <hr className={`${theme == "dark" ? "text-gray-900" : "text-neutral-200"} `} />
+                            <div className="options-items-container ">
                                 <div className="options-items">
-                                    <FiSettings className="text-xl" />
+                                    <FiSettings />
                                     <p>Configuracoes</p>
                                 </div>
-                                <div className="options-items">
-                                    <BsThreeDotsVertical className="text-xl" />
+                                <div className="options-items relative group" onMouseEnter={()=>setSubmenu(true)}>
+                                    <BsThreeDotsVertical />
                                     <p>Mais</p>
+                                    <BsArrowRight />
+                                </div>
+
+                                {/* SUBMENU */}
+                                <div onMouseLeave={()=>setSubmenu(false)} className={`options-card-container submenu ${submenu&&"show"} bg-(--bg-sidebar)  absolute -bottom-20 left-full `}>
+                                    <div className="options-card">
+                                        <div className="options-items-container">
+                                            <div className="options-items">
+                                                <FaMessage />
+                                                <p>Mensagens Salva</p>
+                                            </div>
+                                            <div className="options-items">
+                                                <FaRegCircle />
+                                                <p>Meus Stories</p>
+                                            </div>
+                                            <div className="options-items">
+                                                <TiUserOutline />
+                                                <p>Contatos</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
 
                                 </div>
                             </div>

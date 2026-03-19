@@ -41,3 +41,9 @@ export interface loginProps {
     phone: string;
     password: string;
 }
+export interface RoomType{
+    img_perfil_url:string,
+    profile_id:string,
+    room_id:string,
+    user_name:string
+}
