@@ -1,0 +1,32 @@
+/* <div className="w-full h-screen flex flex-col flex-1 py-2"> */
+.message-container{
+    width: 100%;
+    min-height: 0px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-block: 10px;
+
+}
+.message-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.message-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.message-list::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+
+    transition: background 150ms ease;
+}
+
+.message-list::-webkit-scrollbar-thumb:hover {
+    background: #777;
+}
+
+.message-list::-webkit-scrollbar-corner {
+    background: transparent;
+}
