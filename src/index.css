@@ -68,3 +68,6 @@ svg{
   --border-color: #dcdcdc;
 }
 
+body{
+  background-color: var(--bg-main);
+}

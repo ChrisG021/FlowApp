@@ -171,7 +171,8 @@
     /* tanto o visibility como o opaccity geram o efeito otimizado de sumir e aparecer */
     opacity: 0;
     visibility: hidden;
-    transform: translate(-20px, -20px);
+    /* scale para dar um efeito diferenciado */
+    transform: translate(-20px, -30px) scale(0.8);
 
     transition: all 200ms ease;
 
@@ -181,7 +182,7 @@
 .options-card-container.show {
     opacity: 1;
     visibility: visible;
-    transform: translate(0);
+    transform: translate(0) scale(1);
 }
 
 .options-card-container.menu {

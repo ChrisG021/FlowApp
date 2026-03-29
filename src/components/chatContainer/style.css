@@ -1,15 +1,35 @@
-/* <div className="w-full h-screen flex flex-col flex-1 py-2"> */
-.message-container{
+.chat-container-page {
+    width: 100%;
+        min-height: 100vh;
+
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    align-items: center;
+    flex-direction: column;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.message-container {
     width: 100%;
     min-height: 0px;
     display: flex;
     flex-direction: column;
     flex: 1;
     padding-block: 10px;
-
 }
+
+.message-list {
+    flex: 1;
+    width: 100%;
+    overflow: auto;
+    margin-bottom: 10px;
+    padding-inline: 2px;
+}
+
 .message-list::-webkit-scrollbar {
-    width: 5px;
+    width: 3px;
 }
 
 .message-list::-webkit-scrollbar-track {
@@ -23,6 +43,21 @@
     transition: background 150ms ease;
 }
 
+/* resize-none  flex-1 px-4  rounded outline-none */
+.input-message {
+    width: 100%;
+    resize: none;
+    outline: none;
+    overflow: auto;
+    /* importante para tirar a barra de rolagem*/
+    line-height: 1.4;
+    padding: 8px;
+}
+
+.input-message::-webkit-scrollbar {
+    width: 0;
+}
+
 .message-list::-webkit-scrollbar-thumb:hover {
     background: #777;
 }
@@ -30,3 +65,36 @@
 .message-list::-webkit-scrollbar-corner {
     background: transparent;
 }
+
+.message-sent {
+    max-width: 70%;
+    color: var(--text-primary);
+    width: fit-content;
+    padding: 6px;
+    border-radius: 12px 12px 0;
+    background-color: var(--message-sent);
+    position: relative;
+    z-index: 10;
+}
+
+.message-received {
+    max-width: 70%;
+    color: var(--text-primary);
+    width: fit-content;
+    padding: 6px;
+    border-radius: 12px 12px 12px 0px;
+    background-color: var(--message-received);
+    position: relative;
+    z-index: 10;
+}
+
+/* .message-sent::before{
+    content: "";
+    background-color: #000;
+    width: 10px ;
+    height: 10px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 11;
+} */
